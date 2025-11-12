@@ -1,0 +1,17 @@
+[package]
+name = "tiny_lang_parser"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+pest = "2.8"
+pest_derive = "2.8.3"
+thiserror = "1.0"
+
+[[bin]]
+name = "tiny_lang_parser"
+path = "src/main.rs"
+
+[lib]
+name = "tiny_lang_parser"
+path = "src/lib.rs"
