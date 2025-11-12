@@ -36,7 +36,7 @@ pub enum ASTNode {
 pub enum ParseError {
     /// Error returned by the Pest parser
     #[error("Pest parse error: {0}")]
-    PestError(#[from] pest::error::Error<Rule>),
+    PestError(#[from] Box<pest::error::Error<Rule>>),
     /// Unexpected grammar rule encountered during parsing
     #[error("Unexpected rule: {0:?}")]
     UnexpectedRule(Rule),
@@ -151,7 +151,8 @@ impl Interpreter {
 ///
 /// Returns `ParseError` if the input doesn't conform to the grammar
 pub fn parse_program(input: &str) -> Result<Vec<ASTNode>, ParseError> {
-    let pairs = TinyLangParser::parse(Rule::program, input)?;
+    let pairs = TinyLangParser::parse(Rule::program, input)
+        .map_err(|e| ParseError::PestError(Box::new(e)))?;
     let mut nodes = Vec::new();
 
     for pair in pairs {
