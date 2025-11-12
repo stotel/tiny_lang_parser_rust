@@ -1,12 +1,23 @@
 [package]
 name = "tiny_lang_parser"
 version = "0.1.0"
+description = "A tiny language parser and interpreter for simple math expressions"
 edition = "2021"
+authors = ["Orest Rublevskyi <orest.rublevsky@gmail.com>"]
+license = "MIT"
+repository = "https://github.com/stotel/tiny_lang_parser_rust"
+documentation = "https://docs.rs/tiny-lang-parser"
+readme = "README.md"
 
 [dependencies]
 pest = "2.8"
 pest_derive = "2.8.3"
 thiserror = "1.0"
+anyhow = "1.0"
+clap = { version = "4.4", features = ["derive"] }
+
+[dev-dependencies]
+anyhow = "1.0"
 
 [[bin]]
 name = "tiny_lang_parser"

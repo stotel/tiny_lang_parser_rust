@@ -1,0 +1,36 @@
+//!PEST grammar for Tiny Language
+//! 
+//!This grammar defines a simple language with variables, assignments, 
+//!and basic operations.
+
+WHITESPACE = _{ " " | "\t" | "\r" | "\n" }
+
+///program consists of zero or more statements
+program     = { SOI ~ statement* ~ EOI }
+
+///A statement is either an assignment or expression followed by semicolon
+statement   = { (assignment | expression) ~ ";" }
+
+///assignment: identifier = expression
+assignment  = { identifier ~ "=" ~ expression }
+
+///expression: terms separated by addition/subtraction operators
+expression  = { term ~ (add_op ~ term)* }
+
+///term: factors separated by multiplication/division operators  
+term        = { factor ~ (mul_op ~ factor)* }
+
+///factor: numbers, identifiers, or expression in ()
+factor      = { number | identifier | "(" ~ expression ~ ")" }
+
+///addition operators: + or -
+add_op      = { "+" | "-" }
+
+///multiplication operators: * or /
+mul_op      = { "*" | "/" }
+
+///number: one or more digits
+number      = @{ ASCII_DIGIT+ }
+
+///identifier: one or more lowercase letters
+identifier  = @{ ASCII_ALPHA_LOWER+ }
